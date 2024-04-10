@@ -7,7 +7,7 @@ import { NRFCLOUD_ACCOUNT_SCOPE } from './scope.js'
 /**
  * Returns settings for all accounts
  */
-export const getAllAccountSettings = async ({
+export const getAllAccountsSettings = async ({
 	ssm,
 	stackName,
 }: {
@@ -39,7 +39,7 @@ export const getAllAccountSettings = async ({
 }
 
 console.log(
-	await getAllAccountSettings({
+	await getAllAccountsSettings({
 		ssm: new SSMClient(),
 		stackName: 'hello-nrfcloud-backend',
 	}),
