@@ -32,7 +32,7 @@ export const groundFix =
 		fetchImplementation?: typeof fetch,
 	) =>
 	async (cell: {
-		mcc: string
+		mcc: number
 		mnc: string
 		eci: number
 		tac: number
