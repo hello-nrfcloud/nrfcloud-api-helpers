@@ -17,7 +17,7 @@
     "noEmit": true,
     "verbatimModuleSyntax": true,
     "baseUrl": ".",
-    "rootDir": "."
+    "rootDir": "./src/"
   },
   "include": ["src/**/*"],
   "exclude": ["dist/*"]
