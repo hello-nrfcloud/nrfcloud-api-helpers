@@ -36,7 +36,7 @@ export const groundFix =
 		mnc: string
 		eci: number
 		tac: number
-		rsrp: number
+		rsrp?: number
 	}): Promise<
 		| { error: Error | ValidationError }
 		| { result: Static<typeof GroundFixType> }
