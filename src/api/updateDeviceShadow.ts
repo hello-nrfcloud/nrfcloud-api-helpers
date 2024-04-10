@@ -17,8 +17,8 @@ export const updateDeviceShadow =
 			desired?: Record<string, any>
 			reported?: Record<string, any>
 		},
-	): Promise<void> => {
-		await (fetchImplementation ?? fetch)(
+	): Promise<MaybeOK> => {
+		const res = await (fetchImplementation ?? fetch)(
 			new URL(
 				`${slashless(endpoint)}/v1/devices/${encodeURIComponent(
 					deviceId,
@@ -33,4 +33,12 @@ export const updateDeviceShadow =
 				body: JSON.stringify(state),
 			},
 		)
+		if (res.ok) return { ok: true }
+		return {
+			error: new Error(
+				`Update device status for ${deviceId} failed: ${res.status} (${await res.text()})`,
+			),
+		}
 	}
+
+export type MaybeOK = { error: Error } | { ok: true }
