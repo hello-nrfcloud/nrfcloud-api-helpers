@@ -1,6 +1,6 @@
 import { SSMClient } from '@aws-sdk/client-ssm'
-import { Scopes } from './scope.js'
 import { get } from '@bifravst/aws-ssm-settings-helpers'
+import { NRFCLOUD_ACCOUNT_SCOPE } from './scope.js'
 
 export const getAllAccounts = async ({
 	ssm,
@@ -9,12 +9,15 @@ export const getAllAccounts = async ({
 	ssm: SSMClient
 	stackName: string
 }): Promise<string[]> => [
-	...new Set(
-		Object.keys(
-			await get(ssm)({
-				stackName,
-				scope: Scopes.NRFCLOUD_ACCOUNT_PREFIX,
-			})(),
-		).map((key) => key.split('/')[0] as string),
+	...getAccountsFromAllSettings(
+		await get(ssm)({
+			stackName,
+			scope: NRFCLOUD_ACCOUNT_SCOPE,
+		})(),
 	),
 ]
+
+export const getAccountsFromAllSettings = (
+	settings: Record<string, string>,
+): Set<string> =>
+	new Set(Object.keys(settings).map((key) => key.split('/')[0] as string))

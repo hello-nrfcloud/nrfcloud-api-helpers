@@ -1,5 +1,5 @@
 import type { SSMClient } from '@aws-sdk/client-ssm'
-import { nrfCloudAccount } from './scope.js'
+import { NRFCLOUD_ACCOUNT_SCOPE, nrfCloudAccount } from './scope.js'
 import {
 	get as getSSMSettings,
 	put as putSSMSettings,
@@ -32,50 +32,10 @@ export const getSettings = ({
 }): (() => Promise<Settings>) => {
 	const settingsReader = getSSMSettings(ssm)({
 		stackName,
-		...nrfCloudAccount(account),
+		scope: NRFCLOUD_ACCOUNT_SCOPE,
+		context: nrfCloudAccount(account),
 	})
-	return async (): Promise<Settings> => {
-		const p = await settingsReader()
-		const {
-			apiEndpoint,
-			apiKey,
-			accountDeviceClientCert,
-			accountDevicePrivateKey,
-			mqttEndpoint,
-			accountDeviceClientId,
-			mqttTopicPrefix,
-			coapEndpoint,
-			coapPort,
-		} = p
-		if (apiKey === undefined)
-			throw new Error(`No nRF Cloud API key configured!`)
-		if (accountDeviceClientCert === undefined)
-			throw new Error(`No nRF Cloud account device clientCert configured!`)
-		if (accountDevicePrivateKey === undefined)
-			throw new Error(`No nRF Cloud account device privateKey configured!`)
-		if (accountDeviceClientId === undefined)
-			throw new Error(`No nRF Cloud Account Device client ID configured!`)
-		if (mqttTopicPrefix === undefined)
-			throw new Error(`No nRF Cloud MQTT topic prefix configured!`)
-		if (mqttEndpoint === undefined)
-			throw new Error(`No nRF Cloud MQTT endpoint configured!`)
-
-		return {
-			apiEndpoint:
-				apiEndpoint === undefined ? defaultApiEndpoint : new URL(apiEndpoint),
-			apiKey,
-			mqttEndpoint,
-			accountDeviceClientCert,
-			accountDevicePrivateKey,
-			accountDeviceClientId,
-			mqttTopicPrefix,
-			coapEndpoint:
-				coapEndpoint === undefined
-					? defaultCoAPEndpoint
-					: new URL(coapEndpoint),
-			coapPort: parseInt(coapPort ?? `5684`, 10),
-		}
-	}
+	return async (): Promise<Settings> => validateSettings(await settingsReader())
 }
 
 export const getAPISettings = ({
@@ -89,7 +49,8 @@ export const getAPISettings = ({
 }): (() => Promise<Pick<Settings, 'apiKey' | 'apiEndpoint'>>) => {
 	const settingsReader = getSSMSettings(ssm)({
 		stackName,
-		...nrfCloudAccount(account),
+		scope: NRFCLOUD_ACCOUNT_SCOPE,
+		context: nrfCloudAccount(account),
 	})
 	return async (): Promise<Pick<Settings, 'apiKey' | 'apiEndpoint'>> => {
 		const p = await settingsReader()
@@ -116,7 +77,8 @@ export const putSettings = ({
 }): ((settings: Partial<Settings>) => Promise<void>) => {
 	const settingsWriter = putSSMSettings(ssm)({
 		stackName,
-		...nrfCloudAccount(account),
+		scope: NRFCLOUD_ACCOUNT_SCOPE,
+		context: nrfCloudAccount(account),
 	})
 	return async (settings): Promise<void> => {
 		await Promise.all(
@@ -145,7 +107,8 @@ export const putSetting = ({
 ) => ReturnType<typeof settingsWriter>) => {
 	const settingsWriter = putSSMSettings(ssm)({
 		stackName,
-		...nrfCloudAccount(account),
+		scope: NRFCLOUD_ACCOUNT_SCOPE,
+		context: nrfCloudAccount(account),
 	})
 	return async (property, value, deleteBeforeUpdate) =>
 		settingsWriter({
@@ -166,7 +129,47 @@ export const deleteSettings = ({
 }): ((property: string) => ReturnType<typeof settingsDeleter>) => {
 	const settingsDeleter = deleteSSMSettings(ssm)({
 		stackName,
-		...nrfCloudAccount(account),
+		scope: NRFCLOUD_ACCOUNT_SCOPE,
+		context: nrfCloudAccount(account),
 	})
 	return async (property) => settingsDeleter({ property })
+}
+
+export const validateSettings = (p: Record<string, string>): Settings => {
+	const {
+		apiEndpoint,
+		apiKey,
+		accountDeviceClientCert,
+		accountDevicePrivateKey,
+		mqttEndpoint,
+		accountDeviceClientId,
+		mqttTopicPrefix,
+		coapEndpoint,
+		coapPort,
+	} = p
+	if (apiKey === undefined) throw new Error(`No nRF Cloud API key configured!`)
+	if (accountDeviceClientCert === undefined)
+		throw new Error(`No nRF Cloud account device clientCert configured!`)
+	if (accountDevicePrivateKey === undefined)
+		throw new Error(`No nRF Cloud account device privateKey configured!`)
+	if (accountDeviceClientId === undefined)
+		throw new Error(`No nRF Cloud Account Device client ID configured!`)
+	if (mqttTopicPrefix === undefined)
+		throw new Error(`No nRF Cloud MQTT topic prefix configured!`)
+	if (mqttEndpoint === undefined)
+		throw new Error(`No nRF Cloud MQTT endpoint configured!`)
+
+	return {
+		apiEndpoint:
+			apiEndpoint === undefined ? defaultApiEndpoint : new URL(apiEndpoint),
+		apiKey,
+		mqttEndpoint,
+		accountDeviceClientCert,
+		accountDevicePrivateKey,
+		accountDeviceClientId,
+		mqttTopicPrefix,
+		coapEndpoint:
+			coapEndpoint === undefined ? defaultCoAPEndpoint : new URL(coapEndpoint),
+		coapPort: parseInt(coapPort ?? `5684`, 10),
+	}
 }

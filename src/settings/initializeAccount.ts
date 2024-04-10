@@ -1,6 +1,6 @@
 import { SSMClient } from '@aws-sdk/client-ssm'
 import chalk from 'chalk'
-import { nrfCloudAccount } from './scope.js'
+import { NRFCLOUD_ACCOUNT_SCOPE, nrfCloudAccount } from './scope.js'
 import { get } from '@bifravst/aws-ssm-settings-helpers'
 import { createAccountDevice } from '../api/createAccountDevice.js'
 import { deleteAccountDevice } from '../api/deleteAccountDevice.js'
@@ -30,7 +30,8 @@ export const initializeAccount =
 	async (reset = false): Promise<void> => {
 		const settingsReader = get(ssm)({
 			stackName,
-			...nrfCloudAccount(account),
+			scope: NRFCLOUD_ACCOUNT_SCOPE,
+			context: nrfCloudAccount(account),
 		})
 
 		const { apiKey, apiEndpoint } = await settingsReader()
