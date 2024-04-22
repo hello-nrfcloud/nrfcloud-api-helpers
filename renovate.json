@@ -8,6 +8,10 @@
         "@hello.nrfcloud.com/proto"
       ],
       "groupName": "typebox"
+    },
+    {
+      "matchDepTypes": ["peerDependencies"],
+      "semanticCommitType": "fix"
     }
   ]
 }
