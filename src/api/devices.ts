@@ -1,81 +1,11 @@
 import { Type, type TSchema, type Static } from '@sinclair/typebox'
 import { slashless } from './slashless.js'
 import { ValidationError, validatedFetch } from './validatedFetch.js'
-
-type Nullable<T> = { [K in keyof T]: T[K] | null }
-
-export const DeviceConfig = Type.Partial(
-	Type.Object({
-		activeMode: Type.Boolean(), // e.g. false
-		locationTimeout: Type.Number(), // e.g. 300
-		activeWaitTime: Type.Number(), // e.g. 120
-		movementResolution: Type.Number(), // e.g. 120
-		movementTimeout: Type.Number(), // e.g. 3600
-		accThreshAct: Type.Number(), // e.g. 4
-		accThreshInact: Type.Number(), // e.g. 4
-		accTimeoutInact: Type.Number(), // e.g. 60
-		nod: Type.Array(
-			Type.Union([
-				Type.Literal('gnss'),
-				Type.Literal('ncell'),
-				Type.Literal('wifi'),
-			]),
-		), // e.g. ['nod']
-	}),
-)
+import { DeviceShadow } from './DeviceShadow.js'
 
 const Device = Type.Object({
 	id: Type.String(),
-	state: Type.Optional(
-		Type.Object({
-			reported: Type.Optional(
-				Type.Object({
-					config: Type.Optional(DeviceConfig),
-					connection: Type.Optional(
-						Type.Object({
-							status: Type.Optional(
-								Type.Union([
-									Type.Literal('connected'),
-									Type.Literal('disconnected'),
-								]),
-							),
-						}),
-					),
-					device: Type.Optional(
-						Type.Object({
-							deviceInfo: Type.Optional(
-								Type.Partial(
-									Type.Object({
-										appVersion: Type.String(), // e.g. '1.1.0'
-										modemFirmware: Type.String(), // e.g. 'mfw_nrf9160_1.3.4'
-										imei: Type.String(), // e.g. '352656108602296'
-										board: Type.String(), // e.g. 'thingy91_nrf9160'
-										hwVer: Type.String(), // e.g. 'nRF9160 SICA B1A'
-									}),
-								),
-							),
-						}),
-					),
-				}),
-			),
-			desired: Type.Optional(
-				Type.Object({
-					config: Type.Optional(DeviceConfig),
-				}),
-			),
-			version: Type.Number(),
-		}),
-	),
-	firmware: Type.Optional(
-		Type.Object({
-			app: Type.Optional(
-				Type.Object({
-					name: Type.String({ minLength: 1 }),
-					version: Type.String({ minLength: 1 }),
-				}),
-			),
-		}),
-	),
+	state: Type.Optional(DeviceShadow),
 })
 
 const Page = <T extends TSchema>(Item: T) =>
@@ -118,10 +48,12 @@ export const devices = (
 	) => Promise<
 		{ error: Error | ValidationError } | { result: Static<typeof Device> }
 	>
-	updateConfig: (
+	updateState: (
 		id: string,
-		config: Nullable<Omit<Static<typeof DeviceConfig>, 'nod'>> &
-			Pick<Static<typeof DeviceConfig>, 'nod'>,
+		state: {
+			desired?: Record<string, any>
+			reported?: Record<string, any>
+		},
 	) => Promise<{ error: Error } | { success: boolean }>
 	register: (
 		devices: {
@@ -156,7 +88,7 @@ export const devices = (
 			),
 		get: async (id) =>
 			vf({ resource: `devices/${encodeURIComponent(id)}` }, Device),
-		updateConfig: async (id, config) =>
+		updateState: async (id, state) =>
 			fetch(
 				`${slashless(endpoint)}/v1/devices/${encodeURIComponent(id)}/state`,
 				{
@@ -165,11 +97,7 @@ export const devices = (
 						'Content-Type': 'application/json',
 					},
 					method: 'PATCH',
-					body: JSON.stringify({
-						desired: {
-							config,
-						},
-					}),
+					body: JSON.stringify(state),
 				},
 			).then((res) => {
 				if (res.status >= 400)

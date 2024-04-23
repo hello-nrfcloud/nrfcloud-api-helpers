@@ -21,32 +21,10 @@ void describe('DeviceShadow type', () => {
 						ts: 1697102116821,
 					},
 				},
-				metadata: {
-					reported: {
-						dev: {
-							v: {
-								imei: {
-									timestamp: 1697102122,
-								},
-								iccid: {
-									timestamp: 1697102122,
-								},
-								modV: {
-									timestamp: 1697102122,
-								},
-								brdV: {
-									timestamp: 1697102122,
-								},
-								appV: {
-									timestamp: 1697102122,
-								},
-							},
-							ts: {
-								timestamp: 1697102122,
-							},
-						},
-					},
-				},
+			},
+			$meta: {
+				updatedAt: '2023-04-20T07:29:46.467Z',
+				createdAt: '2023-04-19T11:49:07.370Z',
 			},
 		})
 		assert.equal('errors' in res, false)
