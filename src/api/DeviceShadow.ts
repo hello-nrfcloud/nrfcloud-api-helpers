@@ -25,4 +25,3 @@ export const DeviceShadow = Type.Object({
 })
 
 export type DeviceShadowType = Static<typeof DeviceShadow>
-;``

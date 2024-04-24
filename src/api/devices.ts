@@ -3,17 +3,12 @@ import { slashless } from './slashless.js'
 import { ValidationError, validatedFetch } from './validatedFetch.js'
 import { DeviceShadow } from './DeviceShadow.js'
 
-const Device = Type.Object({
-	id: Type.String(),
-	state: Type.Optional(DeviceShadow),
-})
-
 const Page = <T extends TSchema>(Item: T) =>
 	Type.Object({
 		total: Type.Integer(),
 		items: Type.Array(Item),
 	})
-const Devices = Page(Device)
+const Devices = Page(DeviceShadow)
 
 /**
  * @link https://api.nrfcloud.com/v1/#tag/IP-Devices/operation/ProvisionDevices
@@ -46,7 +41,7 @@ export const devices = (
 	get: (
 		id: string,
 	) => Promise<
-		{ error: Error | ValidationError } | { result: Static<typeof Device> }
+		{ error: Error | ValidationError } | { result: Static<typeof DeviceShadow> }
 	>
 	updateState: (
 		id: string,
@@ -87,7 +82,7 @@ export const devices = (
 				Devices,
 			),
 		get: async (id) =>
-			vf({ resource: `devices/${encodeURIComponent(id)}` }, Device),
+			vf({ resource: `devices/${encodeURIComponent(id)}` }, DeviceShadow),
 		updateState: async (id, state) =>
 			fetch(
 				`${slashless(endpoint)}/v1/devices/${encodeURIComponent(id)}/state`,
