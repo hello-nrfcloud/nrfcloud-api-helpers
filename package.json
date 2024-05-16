@@ -39,7 +39,7 @@
     "@types/node": "20.12.12",
     "husky": "9.0.11",
     "tsmatchers": "5.0.2",
-    "tsx": "4.10.2"
+    "tsx": "4.10.3"
   },
   "lint-staged": {
     "*.ts": [
