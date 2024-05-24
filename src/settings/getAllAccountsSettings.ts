@@ -1,4 +1,4 @@
-import { SSMClient } from '@aws-sdk/client-ssm'
+import type { SSMClient } from '@aws-sdk/client-ssm'
 import { get } from '@bifravst/aws-ssm-settings-helpers'
 import { NRFCLOUD_ACCOUNT_SCOPE } from './scope.js'
 import { groupByAccount } from './groupByAccount.js'

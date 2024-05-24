@@ -1,6 +1,6 @@
 import { Type, type TSchema, type Static } from '@sinclair/typebox'
 import { slashless } from './slashless.js'
-import { ValidationError, validatedFetch } from './validatedFetch.js'
+import { type ValidationError, validatedFetch } from './validatedFetch.js'
 import { DeviceShadow } from './DeviceShadow.js'
 
 const Page = <T extends TSchema>(Item: T) =>

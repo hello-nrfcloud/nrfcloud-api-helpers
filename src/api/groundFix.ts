@@ -6,7 +6,7 @@ import {
 import { Type, type Static } from '@sinclair/typebox'
 import {
 	JSONPayload,
-	ValidationError,
+	type ValidationError,
 	validatedFetch,
 } from './validatedFetch.js'
 

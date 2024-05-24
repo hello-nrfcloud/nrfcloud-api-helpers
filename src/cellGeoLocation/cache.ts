@@ -1,5 +1,5 @@
 import {
-	DynamoDBClient,
+	type DynamoDBClient,
 	GetItemCommand,
 	PutItemCommand,
 } from '@aws-sdk/client-dynamodb'
