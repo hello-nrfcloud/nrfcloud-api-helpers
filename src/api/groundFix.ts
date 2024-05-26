@@ -1,8 +1,3 @@
-import {
-	accuracy as TAccuracy,
-	lat as TLat,
-	lng as TLng,
-} from '@hello.nrfcloud.com/proto/hello'
 import { Type, type Static } from '@sinclair/typebox'
 import {
 	JSONPayload,
@@ -10,13 +5,28 @@ import {
 	validatedFetch,
 } from './validatedFetch.js'
 
+export const lat = Type.Number({
+	minimum: -90,
+	maximum: 90,
+	description: 'Latitude in degrees',
+})
+export const lng = Type.Number({
+	minimum: -180,
+	maximum: 180,
+	description: 'Longitude in degrees',
+})
+export const accuracy = Type.Number({
+	minimum: 0,
+	description: 'HPE (horizontal positioning error) in meters',
+})
+
 /**
  * @link https://api.nrfcloud.com/v1/#tag/Ground-Fix
  */
 export const GroundFixType = Type.Object({
-	lat: TLat, // 63.41999531
-	lon: TLng, // 10.42999506
-	uncertainty: TAccuracy, // 2420
+	lat, // 63.41999531
+	lon: lng, // 10.42999506
+	uncertainty: accuracy, // 2420
 	fulfilledWith: Type.Literal('SCELL'),
 })
 
