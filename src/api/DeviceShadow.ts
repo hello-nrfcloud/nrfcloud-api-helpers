@@ -10,13 +10,17 @@ export const DeviceShadow = Type.Object({
 			minLength: 1,
 			examples: ['2019-08-24T14:15:22Z'],
 		}),
-		updatedAt: Type.String({
-			minLength: 1,
-			examples: ['2019-08-24T14:15:22Z'],
-		}),
+		updatedAt: Type.Optional(
+			Type.String({
+				minLength: 1,
+				examples: ['2019-08-24T14:15:22Z'],
+			}),
+		),
 	}),
 	state: Type.Object({
-		reported: Type.Record(Type.String({ minLength: 1 }), Type.Any()),
+		reported: Type.Optional(
+			Type.Record(Type.String({ minLength: 1 }), Type.Any()),
+		),
 		desired: Type.Optional(
 			Type.Record(Type.String({ minLength: 1 }), Type.Any()),
 		),
