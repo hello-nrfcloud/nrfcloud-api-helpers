@@ -25,6 +25,7 @@ export const DeviceShadow = Type.Object({
 			Type.Record(Type.String({ minLength: 1 }), Type.Any()),
 		),
 		version: Type.Number(),
+		metadata: Type.Record(Type.String({ minLength: 1 }), Type.Any()),
 	}),
 })
 

@@ -21,6 +21,20 @@ void describe('DeviceShadow type', () => {
 						ts: 1697102116821,
 					},
 				},
+				metadata: {
+					dev: {
+						v: {
+							imei: { timestamp: 1697102116821 },
+							iccid: { timestamp: 1697102116821 },
+							modV: { timestamp: 1697102116821 },
+							brdV: { timestamp: 1697102116821 },
+							appV: { timestamp: 1697102116821 },
+						},
+						ts: {
+							timestamp: 1697102116821,
+						},
+					},
+				},
 			},
 			$meta: {
 				updatedAt: '2023-04-20T07:29:46.467Z',
