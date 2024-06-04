@@ -21,7 +21,7 @@ export const getAccountInfo = async (
 		endpoint: URL
 	},
 	fetchImplementation?: typeof fetch,
-): Promise<{ error: Error | ValidationError } | AccountInfo> => {
+): Promise<{ error: Error | ValidationError } | { result: AccountInfo }> => {
 	const maybeAccount = await validatedFetch(
 		{
 			endpoint,
@@ -36,5 +36,5 @@ export const getAccountInfo = async (
 	)
 
 	if ('error' in maybeAccount) return maybeAccount
-	return maybeAccount.result
+	return maybeAccount
 }

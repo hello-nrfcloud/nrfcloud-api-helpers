@@ -18,7 +18,7 @@ void describe('getAccountInfo()', () => {
 				}) as any,
 		)
 		assert.equal('error' in res, false)
-		check(res).is(
+		check('result' in res && res.result).is(
 			objectMatching({
 				mqttEndpoint: 'mqtt.nrfcloud.com',
 				mqttTopicPrefix: 'prod/b8b26bc5-2814-4063-b4fa-83ecddb2fec7/',
