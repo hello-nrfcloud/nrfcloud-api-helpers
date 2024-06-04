@@ -43,7 +43,7 @@ export const validatedFetch =
 		fetchImplementation?: typeof fetch,
 	) =>
 	async <Schema extends TObject>(
-		params:
+		params: (
 			| {
 					resource: string
 			  }
@@ -54,12 +54,13 @@ export const validatedFetch =
 			| {
 					resource: string
 					method: string
-			  },
+			  }
+		) & { query?: URLSearchParams },
 		schema: Schema,
 	): Promise<
 		{ error: Error | ValidationError } | { result: Static<Schema> }
 	> => {
-		const { resource } = params
+		const { resource, query } = params
 		const args: Parameters<typeof fetch>[1] = {
 			headers: headers(apiKey),
 		}
@@ -72,7 +73,7 @@ export const validatedFetch =
 			args.method = params.method
 		}
 		return fetchData(fetchImplementation)(
-			`${slashless(endpoint)}/v1/${resource}`,
+			`${slashless(endpoint)}/v1/${resource}${query !== undefined ? `?${query.toString()}` : ''}`,
 			args,
 		)
 			.then((res) => ({ result: validate(schema, res) }))

@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "id": "3b45f2db-3b0c-4be8-be9a-273f12697fc4",
+      "deviceId": "oob-355025930003742",
+      "serviceType": "MCELL",
+      "insertedAt": "2024-06-04T09:54:52.651Z",
+      "uncertainty": "301",
+      "lat": "59.92335269",
+      "lon": "10.68829941",
+      "meta": {}
+    },
+    {
+      "id": "1d2d7188-ef48-427f-9e7d-55caf47958ac",
+      "deviceId": "oob-355025930003742",
+      "serviceType": "WIFI",
+      "insertedAt": "2024-06-04T09:54:47.014Z",
+      "uncertainty": "15.066",
+      "lat": "59.9212502",
+      "lon": "10.6885059",
+      "meta": {}
+    }
+  ],
+  "total": 100,
+  "pageNextToken": "G6QAUI3UVncWwk%2Bps9f3dKLy3I6kBRhUXs5fmFKo3JJn4JADhwMGFhAH3BIINuA4xsDGDT8Ev7rn%2FV45Dd2vBBCx6wxjnHJOFJ6JQyLRS0Kmudiqz%2FMEsmojHdxaYxOCA06orvL7gm7dxH2o06ADouim%2BstZ2lqDqFDECoX6Rh%2FJGB5dsxTPDQM%3D"
+}
