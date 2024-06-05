@@ -2,7 +2,7 @@ import { Type, type Static } from '@sinclair/typebox'
 import { JSONPayload, validatedFetch } from './validatedFetch.js'
 import type { ValidationError } from 'ajv'
 
-const FOTAJobType = Type.Object(
+export const CreatedFOTAJobType = Type.Object(
 	{
 		jobId: Type.String({
 			minLength: 1,
@@ -35,7 +35,8 @@ export const createFOTAJob =
 		deviceId: string
 		bundleId: string
 	}): Promise<
-		{ error: Error | ValidationError } | { result: Static<typeof FOTAJobType> }
+		| { error: Error | ValidationError }
+		| { result: Static<typeof CreatedFOTAJobType> }
 	> => {
 		const maybeJob = await validatedFetch(
 			{
@@ -48,11 +49,11 @@ export const createFOTAJob =
 				resource: 'fota-jobs',
 				payload: JSONPayload({
 					bundleId,
-					autoApply: 'true',
+					autoApply: true,
 					deviceIds: [deviceId],
 				}),
 			},
-			FOTAJobType,
+			CreatedFOTAJobType,
 		)
 
 		if ('error' in maybeJob) return maybeJob
