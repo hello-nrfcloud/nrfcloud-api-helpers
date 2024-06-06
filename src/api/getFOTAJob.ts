@@ -1,6 +1,7 @@
 import { Type, type Static } from '@sinclair/typebox'
 import type { ValidationError } from 'ajv'
 import { validatedFetch } from './validatedFetch.js'
+import { FwType } from './devices.js'
 
 export enum FOTAJobStatus {
 	CREATED = 'CREATED',
@@ -32,6 +33,43 @@ export const FOTAJobType = Type.Object(
 		createdAt: ts,
 		lastUpdatedAt: Type.Optional(ts),
 		completedAt: Type.Optional(ts),
+		firmware: Type.Optional(
+			Type.Object({
+				bundleId: Type.String({
+					minLength: 1,
+					examples: ['APP*439ddbc7*v2.0.0'],
+				}),
+				fileSize: Type.Number({ minimum: 1, examples: [385068] }),
+				firmwareType: Type.Enum(FwType, { title: 'Firmware Type' }),
+				host: Type.String({
+					minLength: 1,
+					examples: ['firmware.nrfcloud.com'],
+				}),
+				uris: Type.Array(
+					Type.String({
+						minLength: 1,
+						examples: [
+							'bbfe6b73-a46a-43ad-94bd-8e4b4a7847ce/APP*439ddbc7*v2.0.0/hello-nrfcloud-thingy91-v2.0.0-fwupd.bin',
+						],
+					}),
+				),
+				version: Type.String({ minLength: 1, examples: ['v2.0.0'] }),
+			}),
+		),
+		target: Type.Optional(
+			Type.Object({
+				deviceIds: Type.Array(
+					Type.String({
+						minLength: 1,
+						title: 'Device ID',
+						examples: ['oob-358299840021360'],
+					}),
+				),
+				tags: Type.Array(
+					Type.String({ minLength: 1, title: 'Tag', examples: ['nrf9160'] }),
+				),
+			}),
+		),
 	},
 	{
 		title: 'FOTA Job',
