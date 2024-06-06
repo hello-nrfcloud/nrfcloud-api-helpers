@@ -39,7 +39,7 @@ export const FOTAJobType = Type.Object(
 			'See https://api.nrfcloud.com/#tag/FOTA-Jobs/operation/FetchFOTAJob',
 	},
 )
-export const fetchFOTAJob =
+export const getFOTAJob =
 	(
 		{
 			apiKey,
