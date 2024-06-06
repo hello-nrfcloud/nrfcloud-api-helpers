@@ -30,6 +30,8 @@ export const FOTAJobType = Type.Object(
 			description: 'Current status of the job',
 		}),
 		statusDetail: Type.Optional(Type.String({ minLength: 1 })),
+		name: Type.Optional(Type.String({ minLength: 1 })),
+		description: Type.Optional(Type.String({ minLength: 1 })),
 		createdAt: ts,
 		lastUpdatedAt: Type.Optional(ts),
 		completedAt: Type.Optional(ts),
