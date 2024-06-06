@@ -17,16 +17,18 @@ export const DeviceShadow = Type.Object({
 			}),
 		),
 	}),
-	state: Type.Object({
-		reported: Type.Optional(
-			Type.Record(Type.String({ minLength: 1 }), Type.Any()),
-		),
-		desired: Type.Optional(
-			Type.Record(Type.String({ minLength: 1 }), Type.Any()),
-		),
-		version: Type.Number(),
-		metadata: Type.Record(Type.String({ minLength: 1 }), Type.Any()),
-	}),
+	state: Type.Optional(
+		Type.Object({
+			reported: Type.Optional(
+				Type.Record(Type.String({ minLength: 1 }), Type.Any()),
+			),
+			desired: Type.Optional(
+				Type.Record(Type.String({ minLength: 1 }), Type.Any()),
+			),
+			version: Type.Number(),
+			metadata: Type.Record(Type.String({ minLength: 1 }), Type.Any()),
+		}),
+	),
 })
 
 export type DeviceShadowType = Static<typeof DeviceShadow>
