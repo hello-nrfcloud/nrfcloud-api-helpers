@@ -81,6 +81,7 @@ export const devices = (
 	}
 	const vf = validatedFetch({ endpoint, apiKey }, fetchImplementation)
 	return {
+		// FIXME: implement pagination
 		list: async () =>
 			vf(
 				{
