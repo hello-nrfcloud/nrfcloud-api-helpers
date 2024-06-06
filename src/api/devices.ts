@@ -17,13 +17,17 @@ const ProvisionDevice = Type.Object({
 	bulkOpsRequestId: Type.String(),
 })
 
-type FwType =
-	| 'APP'
-	| 'MODEM'
-	| 'BOOT'
-	| 'SOFTDEVICE'
-	| 'BOOTLOADER'
-	| 'MDM_FULL'
+/**
+ * firmware types supported by a device for FOTA
+ */
+enum FwType {
+	APP = 'APP',
+	MODEM = 'MODEM',
+	BOOT = 'BOOT',
+	SOFTDEVICE = 'SOFTDEVICE',
+	BOOTLOADER = 'BOOTLOADER',
+	MDM_FULL = 'MDM_FULL',
+}
 
 export const devices = (
 	{
