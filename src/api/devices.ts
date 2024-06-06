@@ -20,7 +20,7 @@ const ProvisionDevice = Type.Object({
 /**
  * firmware types supported by a device for FOTA
  */
-enum FwType {
+export enum FwType {
 	APP = 'APP',
 	MODEM = 'MODEM',
 	BOOT = 'BOOT',
@@ -58,14 +58,20 @@ export const devices = (
 		devices: {
 			// A globally unique device id (UUIDs are highly recommended)	/^[a-z0-9:_-]{1,128}$/i
 			deviceId: string
+			// A unique ES256 X.509 certificate in PEM format, wrapped in double quotes (to allow for line breaks in CSV)	/^-{5}BEGIN CERTIFICATE-{5}(\r\n|\r|\n)([^-]+)(\r\n|\r|\n)-{5}END CERTIFICATE-{5}(\r\n|\r|\n)$/
+			certPem: string
 			// A custom device type (for example humidity-sensor) to help you better recognize or categorize your devices. Include "gateway" in your subType if you want to provision it as a Gateway. This will give the device additional MQTT permissions for gateway-related topics. Otherwise, it is provisioned as a Generic device.	/[a-zA-Z0-9_.,@\/:#-]{0,799}/
 			subType?: string
 			// A list of pipe-delimited tags to create groups of devices (e.g., warehouse|sensor|east)	Each tag: /^[a-zA-Z0-9_.@:#-]+$/
 			tags?: string[]
-			// A list of pipe-delimited firmware types that each device supports for FOTA (e.g., APP|MODEM)
+			/**
+			 * A list of pipe-delimited firmware types that each device supports for FOTA (e.g., APP|MODEM)
+			 *
+			 * Defaults to all supported (APP|MODEM|BOOT|SOFTDEVICE|BOOTLOADER|MDM_FULL)
+			 *
+			 * @default 'APP|MODEM|BOOT|SOFTDEVICE|BOOTLOADER|MDM_FULL'
+			 */
 			fwTypes?: FwType[]
-			// A unique ES256 X.509 certificate in PEM format, wrapped in double quotes (to allow for line breaks in CSV)	/^-{5}BEGIN CERTIFICATE-{5}(\r\n|\r|\n)([^-]+)(\r\n|\r|\n)-{5}END CERTIFICATE-{5}(\r\n|\r|\n)$/
-			certPem: string
 		}[],
 	) => Promise<{ error: Error } | { bulkOpsRequestId: string }>
 } => {
@@ -105,15 +111,18 @@ export const devices = (
 			}),
 		register: async (devices) => {
 			const bulkRegistrationPayload = devices
-				.map(({ deviceId, subType, tags, fwTypes, certPem }) => [
-					[
-						deviceId,
-						subType ?? '',
-						(tags ?? []).join('|'),
-						((fwTypes as any) ?? []).join('|'),
-						`"${certPem}"`,
-					],
-				])
+				.map(({ deviceId, subType, tags, fwTypes, certPem }) => {
+					const deviceFwTypes = fwTypes ?? Object.values(FwType)
+					return [
+						[
+							deviceId,
+							subType ?? '',
+							(tags ?? []).join('|'),
+							deviceFwTypes.join('|'),
+							`"${certPem}"`,
+						],
+					]
+				})
 				.map((cols) => cols.join(','))
 				.join('\n')
 
