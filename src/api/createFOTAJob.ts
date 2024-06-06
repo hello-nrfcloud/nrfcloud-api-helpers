@@ -50,7 +50,7 @@ export const createFOTAJob =
 				payload: JSONPayload({
 					bundleId,
 					autoApply: true,
-					deviceIds: [deviceId],
+					deviceIdentifiers: [deviceId],
 				}),
 			},
 			CreatedFOTAJobType,
