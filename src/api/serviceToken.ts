@@ -1,5 +1,6 @@
 import { Type } from '@sinclair/typebox'
 import { type ValidationError, validatedFetch } from './validatedFetch.js'
+import type { FetchError } from './FetchError.js'
 
 /**
  * @link https://api.nrfcloud.com/v1/#tag/Account/operation/GetServiceToken
@@ -18,7 +19,9 @@ export const serviceToken =
 			endpoint: URL
 		},
 		fetchImplementation?: typeof fetch,
-	): (() => Promise<{ error: Error | ValidationError } | { token: string }>) =>
+	): (() => Promise<
+		{ error: FetchError | ValidationError } | { token: string }
+	>) =>
 	async () => {
 		const vf = validatedFetch({ endpoint, apiKey }, fetchImplementation)
 		const maybeResult = await vf(

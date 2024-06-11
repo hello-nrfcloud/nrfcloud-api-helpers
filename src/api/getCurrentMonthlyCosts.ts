@@ -1,6 +1,7 @@
-import type { ValidationError } from 'ajv'
+import type { ValidationError } from './validatedFetch.js'
 import { validatedFetch } from './validatedFetch.js'
 import { Type } from '@sinclair/typebox'
+import type { FetchError } from './FetchError.js'
 
 export const getCurrentMonthlyCosts =
 	(
@@ -15,7 +16,7 @@ export const getCurrentMonthlyCosts =
 	) =>
 	async (): Promise<
 		| {
-				error: Error | ValidationError
+				error: FetchError | ValidationError
 		  }
 		| { currentMonthTotalCost: number }
 	> => {

@@ -1,7 +1,8 @@
 import { Type, type Static } from '@sinclair/typebox'
-import type { ValidationError } from 'ajv'
+import type { ValidationError } from './validatedFetch.js'
 import { validatedFetch } from './validatedFetch.js'
 import { FwType } from './devices.js'
+import type { FetchError } from './FetchError.js'
 
 export const FOTABundle = Type.Object({
 	bundleId: Type.String({
@@ -83,7 +84,7 @@ export const getFOTABundles =
 		fetchImplementation?: typeof fetch,
 	) =>
 	async (): Promise<
-		| { error: Error | ValidationError }
+		| { error: FetchError | ValidationError }
 		| { bundles: Array<Static<typeof FOTABundle>> }
 	> => {
 		const vf = validatedFetch(
@@ -101,7 +102,7 @@ const paginateFirmwares = async (
 	bundles: Array<Static<typeof FOTABundle>> = [],
 	pageNextToken: string | undefined = undefined,
 ): Promise<
-	| { error: Error | ValidationError }
+	| { error: FetchError | ValidationError }
 	| { bundles: Array<Static<typeof FOTABundle>> }
 > => {
 	const query = new URLSearchParams({ pageLimit: '100' })

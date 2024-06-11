@@ -2,6 +2,7 @@ import { describe, it, mock } from 'node:test'
 import assert from 'node:assert/strict'
 import { Type } from '@sinclair/typebox'
 import { JSONPayload, validatedFetch } from './validatedFetch.js'
+import { FetchError } from './FetchError.js'
 
 void describe('validatedFetch()', () => {
 	void it('should call an nRF Cloud API endpoint and validate the response', async () => {
@@ -121,6 +122,31 @@ void describe('validatedFetch()', () => {
 				},
 			},
 		])
+	})
+
+	void it('should return an error if the response is not OK', async () => {
+		const mockFetch = mock.fn(() => ({
+			ok: false,
+			status: 400,
+			text: async () => Promise.resolve('Bad Request'),
+			headers: new Map([[`content-length`, 'Bad Request'.length.toString()]]),
+		}))
+		const vf = validatedFetch(
+			{
+				endpoint: new URL('https://example.com/'),
+				apiKey: 'some-key',
+			},
+			mockFetch as any,
+		)
+
+		const res = await vf({ resource: 'foo' }, Type.Object({}))
+
+		assert.equal('error' in res, true)
+		assert.equal('result' in res, false)
+		assert.deepEqual(
+			'error' in res && res.error,
+			new FetchError(400, 'Bad Request'),
+		)
 	})
 })
 

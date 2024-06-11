@@ -2,6 +2,8 @@ import { type Static, type TObject } from '@sinclair/typebox'
 import { slashless } from './slashless.js'
 import { validateWithTypeBox } from '@hello.nrfcloud.com/proto'
 import type { ValueError } from '@sinclair/typebox/compiler'
+import type { FetchError } from './FetchError.js'
+import { toFetchError } from './FetchError.js'
 
 export class ValidationError extends Error {
 	public errors: ValueError[]
@@ -31,9 +33,7 @@ const fetchData =
 	(fetchImplementation?: typeof fetch) =>
 	async (...args: Parameters<typeof fetch>): ReturnType<typeof fetch> => {
 		const response = await (fetchImplementation ?? fetch)(...args)
-		if (!response.ok)
-			throw new Error(`Error fetching status: ${response.status}`)
-
+		if (!response.ok) throw await toFetchError(response)
 		return response.json()
 	}
 
@@ -58,7 +58,7 @@ export const validatedFetch =
 		) & { query?: URLSearchParams },
 		schema: Schema,
 	): Promise<
-		{ error: Error | ValidationError } | { result: Static<Schema> }
+		{ error: FetchError | ValidationError } | { result: Static<Schema> }
 	> => {
 		const { resource, query } = params
 		const args: Parameters<typeof fetch>[1] = {
@@ -77,7 +77,7 @@ export const validatedFetch =
 			args,
 		)
 			.then((res) => ({ result: validate(schema, res) }))
-			.catch((error: Error): { error: Error | ValidationError } => ({
+			.catch((error: FetchError): { error: FetchError | ValidationError } => ({
 				error,
 			}))
 	}

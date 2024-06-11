@@ -1,5 +1,6 @@
 import { Type, type Static } from '@sinclair/typebox'
 import { type ValidationError, validatedFetch } from './validatedFetch.js'
+import type { FetchError } from './FetchError.js'
 
 /**
  * @link https://api.nrfcloud.com/v1/#tag/Bulk-Ops-Requests/operation/FetchBulkOpsRequest
@@ -28,7 +29,7 @@ export const bulkOpsRequests =
 	async (
 		bulkOpsId: string,
 	): Promise<
-		| { error: Error | ValidationError }
+		| { error: FetchError | ValidationError }
 		| { result: Static<typeof BulkOpsRequestType> }
 	> => {
 		const vf = validatedFetch({ endpoint, apiKey }, fetchImplementation)

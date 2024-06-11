@@ -4,6 +4,7 @@ import {
 	type ValidationError,
 	validatedFetch,
 } from './validatedFetch.js'
+import type { FetchError } from './FetchError.js'
 
 export const lat = Type.Number({
 	minimum: -90,
@@ -48,7 +49,7 @@ export const groundFix =
 		tac: number
 		rsrp?: number
 	}): Promise<
-		| { error: Error | ValidationError }
+		| { error: FetchError | ValidationError }
 		| { result: Static<typeof GroundFixType> }
 	> => {
 		const vf = validatedFetch({ endpoint, apiKey }, fetchImplementation)

@@ -1,7 +1,8 @@
 import { Type, type Static } from '@sinclair/typebox'
+import type { ValidationError } from './validatedFetch.js'
 import { validatedFetch } from './validatedFetch.js'
 import { DeviceShadow } from './DeviceShadow.js'
-import type { ValidationError } from 'ajv'
+import type { FetchError } from './FetchError.js'
 
 const DeviceShadows = Type.Array(DeviceShadow)
 
@@ -26,7 +27,8 @@ export const getDeviceShadow = (
 ): ((
 	devices: string[],
 ) => Promise<
-	{ shadows: Static<typeof DeviceShadows> } | { error: Error | ValidationError }
+	| { shadows: Static<typeof DeviceShadows> }
+	| { error: FetchError | ValidationError }
 >) => {
 	const vf = validatedFetch({ endpoint, apiKey }, fetchImplementation)
 

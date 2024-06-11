@@ -2,6 +2,8 @@ import { Type, type TSchema, type Static } from '@sinclair/typebox'
 import { slashless } from './slashless.js'
 import { type ValidationError, validatedFetch } from './validatedFetch.js'
 import { DeviceShadow } from './DeviceShadow.js'
+import type { FetchError } from './FetchError.js'
+import { toFetchError } from './FetchError.js'
 
 const Page = <T extends TSchema>(Item: T) =>
 	Type.Object({
@@ -40,12 +42,13 @@ export const devices = (
 	fetchImplementation?: typeof fetch,
 ): {
 	list: () => Promise<
-		{ error: Error | ValidationError } | { result: Static<typeof Devices> }
+		{ error: FetchError | ValidationError } | { result: Static<typeof Devices> }
 	>
 	get: (
 		id: string,
 	) => Promise<
-		{ error: Error | ValidationError } | { result: Static<typeof DeviceShadow> }
+		| { error: FetchError | ValidationError }
+		| { result: Static<typeof DeviceShadow> }
 	>
 	updateState: (
 		id: string,
@@ -53,7 +56,7 @@ export const devices = (
 			desired?: Record<string, any>
 			reported?: Record<string, any>
 		},
-	) => Promise<{ error: Error } | { success: boolean }>
+	) => Promise<{ error: FetchError | ValidationError } | { success: boolean }>
 	register: (
 		devices: {
 			// A globally unique device id (UUIDs are highly recommended)	/^[a-z0-9:_-]{1,128}$/i
@@ -73,7 +76,9 @@ export const devices = (
 			 */
 			fwTypes?: FwType[]
 		}[],
-	) => Promise<{ error: Error } | { bulkOpsRequestId: string }>
+	) => Promise<
+		{ error: FetchError | ValidationError } | { bulkOpsRequestId: string }
+	>
 } => {
 	const headers = {
 		Authorization: `Bearer ${apiKey}`,
@@ -105,9 +110,8 @@ export const devices = (
 					method: 'PATCH',
 					body: JSON.stringify(state),
 				},
-			).then((res) => {
-				if (res.status >= 400)
-					return { error: new Error(`Update failed: ${res.status}`) }
+			).then(async (res) => {
+				if (res.status >= 400) return { error: await toFetchError(res) }
 				return { success: true }
 			}),
 		register: async (devices) => {
@@ -138,11 +142,7 @@ export const devices = (
 				ProvisionDevice,
 			)
 
-			if ('error' in maybeResult) {
-				return {
-					error: maybeResult.error,
-				}
-			}
+			if ('error' in maybeResult) return maybeResult
 
 			return { bulkOpsRequestId: maybeResult.result.bulkOpsRequestId }
 		},

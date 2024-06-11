@@ -1,6 +1,7 @@
 import { Type, type Static } from '@sinclair/typebox'
+import type { ValidationError } from './validatedFetch.js'
 import { JSONPayload, validatedFetch } from './validatedFetch.js'
-import type { ValidationError } from 'ajv'
+import type { FetchError } from './FetchError.js'
 
 export const CreatedFOTAJobType = Type.Object(
 	{
@@ -35,7 +36,7 @@ export const createFOTAJob =
 		deviceId: string
 		bundleId: string
 	}): Promise<
-		| { error: Error | ValidationError }
+		| { error: FetchError | ValidationError }
 		| { result: Static<typeof CreatedFOTAJobType> }
 	> => {
 		const maybeJob = await validatedFetch(

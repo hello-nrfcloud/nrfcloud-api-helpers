@@ -1,7 +1,9 @@
 import { Type, type Static } from '@sinclair/typebox'
-import type { ValidationError } from 'ajv'
+
+import type { ValidationError } from './validatedFetch.js'
 import { validatedFetch } from './validatedFetch.js'
 import { FwType } from './devices.js'
+import type { FetchError } from './FetchError.js'
 
 export enum FOTAJobStatus {
 	CREATED = 'CREATED',
@@ -101,7 +103,8 @@ export const getFOTAJob =
 	}: {
 		jobId: string
 	}): Promise<
-		{ error: Error | ValidationError } | { result: Static<typeof FOTAJobType> }
+		| { error: FetchError | ValidationError }
+		| { result: Static<typeof FOTAJobType> }
 	> => {
 		const maybeJob = await validatedFetch(
 			{

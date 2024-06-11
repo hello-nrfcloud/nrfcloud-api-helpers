@@ -1,6 +1,7 @@
 import { Type, type Static } from '@sinclair/typebox'
+import type { ValidationError } from './validatedFetch.js'
 import { validatedFetch } from './validatedFetch.js'
-import type { ValidationError } from 'ajv'
+import type { FetchError } from './FetchError.js'
 
 export enum LocationHistoryServiceType {
 	ANCHOR = 'ANCHOR',
@@ -118,7 +119,7 @@ export const getLocationHistory =
 		start?: Date
 		end?: Date
 	}): Promise<
-		| { error: Error | ValidationError }
+		| { error: FetchError | ValidationError }
 		| { result: Static<typeof LocationHistoryType> }
 	> => {
 		const query = new URLSearchParams({
