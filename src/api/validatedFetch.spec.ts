@@ -148,6 +148,28 @@ void describe('validatedFetch()', () => {
 			new FetchError(400, 'Bad Request'),
 		)
 	})
+
+	void it('should return undefined if response is empty', async () => {
+		const mockFetch = mock.fn(() => ({
+			ok: true,
+			status: 204,
+			text: async () => '',
+			headers: new Map([[`content-length`, '0']]),
+		}))
+		const vf = validatedFetch(
+			{
+				endpoint: new URL('https://example.com/'),
+				apiKey: 'some-key',
+			},
+			mockFetch as any,
+		)
+		const res = await vf({ resource: 'foo' }, Type.Undefined())
+		assert.deepEqual(
+			'result' in res && res.result,
+			undefined,
+			'Result should be undefined',
+		)
+	})
 })
 
 void describe('JSONPayload()', () => {

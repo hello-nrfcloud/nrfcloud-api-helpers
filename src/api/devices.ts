@@ -1,9 +1,9 @@
-import { Type, type TSchema, type Static } from '@sinclair/typebox'
-import { slashless } from './slashless.js'
-import { type ValidationError, validatedFetch } from './validatedFetch.js'
+import { Type, type Static, type TSchema } from '@sinclair/typebox'
 import { DeviceShadow } from './DeviceShadow.js'
 import type { FetchError } from './FetchError.js'
 import { toFetchError } from './FetchError.js'
+import { slashless } from './slashless.js'
+import { validatedFetch, type ValidationError } from './validatedFetch.js'
 
 const Page = <T extends TSchema>(Item: T) =>
 	Type.Object({
@@ -79,6 +79,9 @@ export const devices = (
 	) => Promise<
 		{ error: FetchError | ValidationError } | { bulkOpsRequestId: string }
 	>
+	remove: (
+		deviceId: string,
+	) => Promise<{ error: FetchError | ValidationError } | { success: boolean }>
 } => {
 	const headers = {
 		Authorization: `Bearer ${apiKey}`,
@@ -145,6 +148,19 @@ export const devices = (
 			if ('error' in maybeResult) return maybeResult
 
 			return { bulkOpsRequestId: maybeResult.result.bulkOpsRequestId }
+		},
+		remove: async (deviceId) => {
+			const maybeResult = await vf(
+				{
+					method: 'DELETE',
+					resource: `devices/${deviceId}`,
+				},
+				Type.Any(),
+			)
+
+			if ('error' in maybeResult) return maybeResult
+
+			return { success: true }
 		},
 	}
 }

@@ -1,9 +1,9 @@
-import { type Static, type TObject } from '@sinclair/typebox'
-import { slashless } from './slashless.js'
 import { validateWithTypeBox } from '@hello.nrfcloud.com/proto'
+import { type Static, type TSchema } from '@sinclair/typebox'
 import type { ValueError } from '@sinclair/typebox/compiler'
 import type { FetchError } from './FetchError.js'
 import { toFetchError } from './FetchError.js'
+import { slashless } from './slashless.js'
 
 export class ValidationError extends Error {
 	public errors: ValueError[]
@@ -15,7 +15,7 @@ export class ValidationError extends Error {
 	}
 }
 
-const validate = <T extends TObject>(
+const validate = <T extends TSchema>(
 	SchemaObject: T,
 	data: unknown,
 ): Static<T> => {
@@ -31,9 +31,10 @@ const validate = <T extends TObject>(
 
 const fetchData =
 	(fetchImplementation?: typeof fetch) =>
-	async (...args: Parameters<typeof fetch>): ReturnType<typeof fetch> => {
+	async (...args: Parameters<typeof fetch>): Promise<unknown> => {
 		const response = await (fetchImplementation ?? fetch)(...args)
 		if (!response.ok) throw await toFetchError(response)
+		if (response.headers?.get('content-length') === '0') return undefined
 		return response.json()
 	}
 
@@ -42,7 +43,7 @@ export const validatedFetch =
 		{ endpoint, apiKey }: { apiKey: string; endpoint: URL },
 		fetchImplementation?: typeof fetch,
 	) =>
-	async <Schema extends TObject>(
+	async <Schema extends TSchema>(
 		params: (
 			| {
 					resource: string
