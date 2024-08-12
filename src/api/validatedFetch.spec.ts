@@ -1,8 +1,8 @@
-import { describe, it, mock } from 'node:test'
-import assert from 'node:assert/strict'
 import { Type } from '@sinclair/typebox'
-import { JSONPayload, validatedFetch } from './validatedFetch.js'
+import assert from 'node:assert/strict'
+import { describe, it, mock } from 'node:test'
 import { FetchError } from './FetchError.js'
+import { JSONPayload, validatedFetch } from './validatedFetch.js'
 
 void describe('validatedFetch()', () => {
 	void it('should call an nRF Cloud API endpoint and validate the response', async () => {

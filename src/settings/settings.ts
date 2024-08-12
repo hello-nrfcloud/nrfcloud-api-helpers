@@ -1,10 +1,10 @@
 import type { SSMClient } from '@aws-sdk/client-ssm'
-import { NRFCLOUD_ACCOUNT_SCOPE, nrfCloudAccount } from './scope.js'
 import {
+	remove as deleteSSMSettings,
 	get as getSSMSettings,
 	put as putSSMSettings,
-	remove as deleteSSMSettings,
 } from '@bifravst/aws-ssm-settings-helpers'
+import { NRFCLOUD_ACCOUNT_SCOPE, nrfCloudAccount } from './scope.js'
 
 export const defaultApiEndpoint = new URL('https://api.nrfcloud.com')
 export const defaultCoAPEndpoint = new URL('coaps://coap.nrfcloud.com')
