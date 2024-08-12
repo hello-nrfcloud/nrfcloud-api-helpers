@@ -1,8 +1,8 @@
 import { Type, type Static } from '@sinclair/typebox'
-import type { ValidationError } from './validatedFetch.js'
-import { validatedFetch } from './validatedFetch.js'
 import { DeviceShadow } from './DeviceShadow.js'
 import type { FetchError } from './FetchError.js'
+import type { ValidationError } from './validatedFetch.js'
+import { validatedFetch } from './validatedFetch.js'
 
 const DeviceShadows = Type.Array(DeviceShadow)
 

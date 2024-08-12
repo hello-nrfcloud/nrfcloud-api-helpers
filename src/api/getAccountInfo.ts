@@ -1,7 +1,7 @@
 import { Type, type Static } from '@sinclair/typebox'
+import type { FetchError } from './FetchError.js'
 import type { ValidationError } from './validatedFetch.js'
 import { validatedFetch } from './validatedFetch.js'
-import type { FetchError } from './FetchError.js'
 
 const AccountInfoType = Type.Object({
 	mqttEndpoint: Type.String(), // e.g. 'mqtt.nrfcloud.com'
