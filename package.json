@@ -36,7 +36,7 @@
     "@bifravst/prettier-config": "1.1.0",
     "@commitlint/config-conventional": "19.2.2",
     "@types/aws-lambda": "8.10.143",
-    "@types/node": "20.16.1",
+    "@types/node": "22.5.0",
     "husky": "9.1.5",
     "tsmatchers": "5.0.2",
     "tsx": "4.17.0"
@@ -82,11 +82,11 @@
   ],
   "prettier": "@bifravst/prettier-config",
   "peerDependencies": {
-    "@aws-sdk/client-dynamodb": "^3.635.0",
-    "@aws-sdk/client-ssm": "^3.635.0",
-    "@aws-sdk/util-dynamodb": "^3.635.0",
+    "@aws-sdk/client-dynamodb": "^3.637.0",
+    "@aws-sdk/client-ssm": "^3.637.0",
+    "@aws-sdk/util-dynamodb": "^3.637.0",
     "@bifravst/aws-ssm-settings-helpers": "^1.2.16",
-    "@hello.nrfcloud.com/proto": "^14.3.14",
+    "@hello.nrfcloud.com/proto": "^15.0.0",
     "@sinclair/typebox": "^0.33.7"
   }
 }
