@@ -38,7 +38,7 @@
     "@types/aws-lambda": "8.10.145",
     "@types/node": "22.5.4",
     "commitlint": "19.5.0",
-    "husky": "9.1.5",
+    "husky": "9.1.6",
     "tsmatchers": "5.0.2",
     "tsx": "4.19.0"
   },
