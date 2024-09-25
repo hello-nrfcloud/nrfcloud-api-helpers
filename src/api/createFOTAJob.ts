@@ -3,7 +3,7 @@ import type { FetchError } from './FetchError.js'
 import type { ValidationError } from './validatedFetch.js'
 import { JSONPayload, validatedFetch } from './validatedFetch.js'
 
-export const CreatedFOTAJobType = Type.Object(
+export const CreateFOTAJobType = Type.Object(
 	{
 		jobId: Type.String({
 			minLength: 1,
@@ -37,7 +37,7 @@ export const createFOTAJob =
 		bundleId: string
 	}): Promise<
 		| { error: FetchError | ValidationError }
-		| { result: Static<typeof CreatedFOTAJobType> }
+		| { result: Static<typeof CreateFOTAJobType> }
 	> => {
 		const maybeJob = await validatedFetch(
 			{
@@ -54,7 +54,7 @@ export const createFOTAJob =
 					deviceIdentifiers: [deviceId],
 				}),
 			},
-			CreatedFOTAJobType,
+			CreateFOTAJobType,
 		)
 
 		if ('error' in maybeJob) return maybeJob
