@@ -36,7 +36,7 @@
     "@bifravst/prettier-config": "1.1.1",
     "@commitlint/config-conventional": "19.5.0",
     "@types/aws-lambda": "8.10.145",
-    "@types/node": "22.6.1",
+    "@types/node": "22.7.0",
     "commitlint": "19.5.0",
     "husky": "9.1.6",
     "tsmatchers": "5.0.2",
