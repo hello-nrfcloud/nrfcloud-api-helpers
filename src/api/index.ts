@@ -1,4 +1,5 @@
 export * from './bulkOps.js'
+export * from './cancelFOTAJob.js'
 export * from './createAccountDevice.js'
 export * from './createFOTAJob.js'
 export * from './deleteAccountDevice.js'
