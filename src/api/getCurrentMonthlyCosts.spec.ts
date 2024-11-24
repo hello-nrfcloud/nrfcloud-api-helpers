@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { getCurrentMonthlyCosts } from './getCurrentMonthlyCosts.js'
-import APIresponse from './test-data/account.json'
+import APIresponse from './test-data/account.json' assert { type: 'json' }
 
 void describe('getCurrentMonthlyCosts()', () => {
 	void it("return the current month's total cost for an account", async () => {

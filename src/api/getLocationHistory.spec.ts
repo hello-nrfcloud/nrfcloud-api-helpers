@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { aString, arrayMatching, check, objectMatching } from 'tsmatchers'
 import { getLocationHistory } from './getLocationHistory.js'
-import APIresponse from './test-data/location.json'
+import APIresponse from './test-data/location.json' assert { type: 'json' }
 
 await describe('getLocationHistory()', async () => {
 	await it('return the location history', async () => {

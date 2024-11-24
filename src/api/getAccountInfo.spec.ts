@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { check, objectMatching } from 'tsmatchers'
 import { getAccountInfo } from './getAccountInfo.js'
-import APIresponse from './test-data/account.json'
+import APIresponse from './test-data/account.json' assert { type: 'json' }
 
 void describe('getAccountInfo()', () => {
 	void it('return the account info', async () => {
