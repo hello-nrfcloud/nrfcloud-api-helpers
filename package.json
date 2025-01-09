@@ -83,9 +83,9 @@
   ],
   "prettier": "@bifravst/prettier-config",
   "peerDependencies": {
-    "@aws-sdk/client-dynamodb": "^3.724.0",
-    "@aws-sdk/client-ssm": "^3.723.0",
-    "@aws-sdk/util-dynamodb": "^3.724.0",
+    "@aws-sdk/client-dynamodb": "^3.726.0",
+    "@aws-sdk/client-ssm": "^3.726.0",
+    "@aws-sdk/util-dynamodb": "^3.726.0",
     "@bifravst/aws-ssm-settings-helpers": "^1.2.88",
     "@hello.nrfcloud.com/proto": "^15.3.34",
     "@sinclair/typebox": "^0.34.13"
