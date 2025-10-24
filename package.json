@@ -87,7 +87,7 @@
     "@aws-sdk/client-ssm": "^3.913.0",
     "@aws-sdk/util-dynamodb": "^3.913.0",
     "@bifravst/aws-ssm-settings-helpers": "^1.2.220",
-    "@hello.nrfcloud.com/proto": "^15.4.70",
+    "@hello.nrfcloud.com/proto": "^15.4.71",
     "@sinclair/typebox": "^0.34.41"
   }
 }
