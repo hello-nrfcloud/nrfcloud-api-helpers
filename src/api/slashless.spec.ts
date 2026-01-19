@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-import { slashless } from './slashless.js'
+import { slashless } from './slashless.ts'
 
 void describe('slashless()', () => {
 	void it('should remove the slash from an URL and convert it to a string', () =>

@@ -16,9 +16,9 @@
     "noUnusedLocals": true,
     "noEmit": true,
     "verbatimModuleSyntax": true,
-    "baseUrl": ".",
-    "rootDir": "./src/"
+    "allowImportingTsExtensions": true,
+    "rootDir": "."
   },
-  "include": ["src/**/*"],
-  "exclude": ["dist/*"]
+  "exclude": ["npm/**/*"],
+  "include": ["./**/*.ts", "./.npm/*.ts"]
 }

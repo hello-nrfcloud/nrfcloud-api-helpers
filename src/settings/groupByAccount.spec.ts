@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-import { groupByAccount } from './groupByAccount.js'
+import { groupByAccount } from './groupByAccount.ts'
 
 void describe('groupByAccount()', () => {
 	void it('should group settings by account', () =>

@@ -1,6 +1,6 @@
 import { Type, type Static } from '@sinclair/typebox'
-import type { FetchError } from './FetchError.js'
-import { validatedFetch, type ValidationError } from './validatedFetch.js'
+import type { FetchError } from './FetchError.ts'
+import { validatedFetch, type ValidationError } from './validatedFetch.ts'
 
 /**
  * @link https://api.nrfcloud.com/v1/#tag/Bulk-Ops-Requests/operation/FetchBulkOpsRequest

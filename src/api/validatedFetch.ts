@@ -1,9 +1,9 @@
 import { validateWithTypeBox } from '@hello.nrfcloud.com/proto'
 import { type Static, type TSchema } from '@sinclair/typebox'
 import type { ValueError } from '@sinclair/typebox/compiler'
-import type { FetchError } from './FetchError.js'
-import { toFetchError } from './FetchError.js'
-import { slashless } from './slashless.js'
+import type { FetchError } from './FetchError.ts'
+import { toFetchError } from './FetchError.ts'
+import { slashless } from './slashless.ts'
 
 export class ValidationError extends Error {
 	public errors: ValueError[]

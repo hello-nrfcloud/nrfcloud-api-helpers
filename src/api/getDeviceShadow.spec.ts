@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { describe, it, mock } from 'node:test'
-import { getDeviceShadow } from './getDeviceShadow.js'
+import { getDeviceShadow } from './getDeviceShadow.ts'
 
 void describe('getDeviceShadow()', () => {
 	void it('should accept a response without pagination and total devices', async () => {

@@ -1,4 +1,4 @@
-import { slashless } from './slashless.js'
+import { slashless } from './slashless.ts'
 
 export const deleteAccountDevice = async ({
 	apiKey,

@@ -1,8 +1,8 @@
 import { Type, type Static } from '@sinclair/typebox'
-import { FwType } from './devices.js'
-import type { FetchError } from './FetchError.js'
-import type { ValidationError } from './validatedFetch.js'
-import { validatedFetch } from './validatedFetch.js'
+import { FwType } from './devices.ts'
+import type { FetchError } from './FetchError.ts'
+import type { ValidationError } from './validatedFetch.ts'
+import { validatedFetch } from './validatedFetch.ts'
 
 export const FOTABundle = Type.Object({
 	bundleId: Type.String({

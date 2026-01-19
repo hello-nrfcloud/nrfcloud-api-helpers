@@ -1,7 +1,7 @@
 import { validateWithTypeBox } from '@hello.nrfcloud.com/proto'
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-import { DeviceShadow } from './DeviceShadow.js'
+import { DeviceShadow } from './DeviceShadow.ts'
 
 void describe('DeviceShadow type', () => {
 	void it('should document the device shadow object', () => {

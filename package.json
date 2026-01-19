@@ -5,16 +5,16 @@
   "exports": {
     "./*": {
       "import": {
-        "types": "./dist/*/index.d.ts",
-        "default": "./dist/*/index.js"
+        "types": "./npm/*/export.d.ts",
+        "default": "./npm/*/export.js"
       }
     }
   },
   "type": "module",
   "scripts": {
-    "test": "tsx --no-warnings --test ./src/**/*.spec.ts",
+    "test": "node --no-warnings --experimental-transform-types --test \"!(node_modules|e2e-tests|integration-tests)/**/*.spec.ts\"",
     "prepare": "husky",
-    "prepublishOnly": "npx tsc --noEmit false --outDir ./dist -d"
+    "prepublishOnly": "node --experimental-strip-types ./.npm/compile.ts && npx tsc -P ./.npm/tsconfig.npm.json --outDir ./npm"
   },
   "repository": {
     "type": "git",
@@ -32,15 +32,15 @@
   "author": "Nordic Semiconductor ASA | nordicsemi.no",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "@bifravst/eslint-config-typescript": "6.1.20",
+    "@bifravst/eslint-config-typescript": "6.4.4",
     "@bifravst/prettier-config": "1.1.17",
-    "@commitlint/config-conventional": "19.8.1",
+    "@commitlint/config-conventional": "20.3.1",
+    "@swc/core": "1.15.8",
     "@types/aws-lambda": "8.10.159",
-    "@types/node": "22.19.7",
-    "commitlint": "19.8.1",
-    "husky": "9.1.7",
-    "tsmatchers": "5.0.3",
-    "tsx": "4.20.4"
+    "@types/node": "25.0.9",
+    "@typescript/native-preview": "7.0.0-dev.20260119.1",
+    "commitlint": "20.3.1",
+    "husky": "9.1.7"
   },
   "lint-staged": {
     "*.ts": [
@@ -52,7 +52,7 @@
     ]
   },
   "engines": {
-    "node": ">=22",
+    "node": ">=24",
     "npm": ">=10"
   },
   "release": {
@@ -77,15 +77,15 @@
     "access": "public"
   },
   "files": [
-    "dist",
+    "npm",
     "LICENSE",
     "README.md"
   ],
   "prettier": "@bifravst/prettier-config",
   "peerDependencies": {
-    "@aws-sdk/client-dynamodb": "^3.970.0",
-    "@aws-sdk/client-ssm": "^3.970.0",
-    "@aws-sdk/util-dynamodb": "^3.970.0",
+    "@aws-sdk/client-dynamodb": "^3.971.0",
+    "@aws-sdk/client-ssm": "^3.971.0",
+    "@aws-sdk/util-dynamodb": "^3.971.0",
     "@bifravst/aws-ssm-settings-helpers": "^1.2.257",
     "@hello.nrfcloud.com/proto": "^15.4.93",
     "@sinclair/typebox": "^0.34.47"

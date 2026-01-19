@@ -4,7 +4,7 @@ import {
 	get as getSSMSettings,
 	put as putSSMSettings,
 } from '@bifravst/aws-ssm-settings-helpers'
-import { NRFCLOUD_ACCOUNT_SCOPE, nrfCloudAccount } from './scope.js'
+import { NRFCLOUD_ACCOUNT_SCOPE, nrfCloudAccount } from './scope.ts'
 
 export const defaultApiEndpoint = new URL('https://api.nrfcloud.com')
 export const defaultCoAPEndpoint = new URL('coaps://coap.nrfcloud.com')

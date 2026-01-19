@@ -1,10 +1,10 @@
 import { Type, type Static } from '@sinclair/typebox'
-import type { FetchError } from './FetchError.js'
+import type { FetchError } from './FetchError.ts'
 import {
 	JSONPayload,
 	validatedFetch,
 	type ValidationError,
-} from './validatedFetch.js'
+} from './validatedFetch.ts'
 
 export const lat = Type.Number({
 	minimum: -90,

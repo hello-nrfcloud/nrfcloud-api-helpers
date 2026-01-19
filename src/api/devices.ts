@@ -1,9 +1,9 @@
 import { Type, type Static, type TSchema } from '@sinclair/typebox'
-import { DeviceShadow } from './DeviceShadow.js'
-import type { FetchError } from './FetchError.js'
-import { toFetchError } from './FetchError.js'
-import { slashless } from './slashless.js'
-import { validatedFetch, type ValidationError } from './validatedFetch.js'
+import { DeviceShadow } from './DeviceShadow.ts'
+import type { FetchError } from './FetchError.ts'
+import { toFetchError } from './FetchError.ts'
+import { slashless } from './slashless.ts'
+import { validatedFetch, type ValidationError } from './validatedFetch.ts'
 
 const Page = <T extends TSchema>(Item: T) =>
 	Type.Object({

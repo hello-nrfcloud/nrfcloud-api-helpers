@@ -1,6 +1,6 @@
 import { Type } from '@sinclair/typebox'
-import type { FetchError } from './FetchError.js'
-import { type ValidationError, validatedFetch } from './validatedFetch.js'
+import type { FetchError } from './FetchError.ts'
+import { type ValidationError, validatedFetch } from './validatedFetch.ts'
 
 /**
  * @link https://api.nrfcloud.com/v1/#tag/Account/operation/GetServiceToken

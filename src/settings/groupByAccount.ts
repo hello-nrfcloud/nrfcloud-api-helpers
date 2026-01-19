@@ -1,4 +1,4 @@
-import { getAccountsFromAllSettings } from './getAllAccounts.js'
+import { getAccountsFromAllSettings } from './getAllAccounts.ts'
 
 export const groupByAccount = (
 	allSettings: Record<string, string>,

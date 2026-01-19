@@ -1,5 +1,5 @@
 import { Type, type Static } from '@sinclair/typebox'
-import { validatedFetch } from './validatedFetch.js'
+import { validatedFetch } from './validatedFetch.ts'
 
 /**
  * @link https://api.nrfcloud.com/v1/#tag/Account-Devices/operation/CreateAccountDevice

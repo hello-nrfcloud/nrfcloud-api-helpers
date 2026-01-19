@@ -1,7 +1,7 @@
 import { Type, type Static } from '@sinclair/typebox'
-import type { FetchError } from './FetchError.js'
-import type { ValidationError } from './validatedFetch.js'
-import { JSONPayload, validatedFetch } from './validatedFetch.js'
+import type { FetchError } from './FetchError.ts'
+import type { ValidationError } from './validatedFetch.ts'
+import { JSONPayload, validatedFetch } from './validatedFetch.ts'
 
 export const CreateFOTAJobType = Type.Object(
 	{
