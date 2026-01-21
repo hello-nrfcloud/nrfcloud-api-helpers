@@ -7,7 +7,6 @@ import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { glob } from 'node:fs/promises'
 import path, { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import tsconfig from './tsconfig.npm.json' with { type: 'json' }
 import { updateImports } from './updateImports.ts'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -20,9 +19,7 @@ try {
 	// pass
 }
 
-for await (const file of glob(
-	`./.npm/{${tsconfig.include.join(',')}}/**/*.ts`,
-)) {
+for await (const file of glob(`./.npm/../src/**/*.ts`)) {
 	if (file.endsWith('.spec.ts')) continue
 	let compiled = (
 		await swc.transformFile(file, {
