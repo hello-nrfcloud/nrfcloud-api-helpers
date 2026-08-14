@@ -80,6 +80,7 @@
   },
   "files": [
     "npm",
+    "src",
     "LICENSE",
     "README.md"
   ],
