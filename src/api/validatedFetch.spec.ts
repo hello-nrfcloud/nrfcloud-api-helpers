@@ -46,7 +46,7 @@ void describe('validatedFetch()', () => {
 				endpoint: new URL('https://example.com/'),
 				apiKey: 'some-key',
 			},
-			() => Promise.reject(err) as any,
+			async () => Promise.reject(err),
 		)
 		assert.deepEqual(await vf({ resource: 'some-resource' }, Type.Object({})), {
 			error: err,

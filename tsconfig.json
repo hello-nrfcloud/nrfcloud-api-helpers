@@ -17,7 +17,8 @@
     "noEmit": true,
     "verbatimModuleSyntax": true,
     "allowImportingTsExtensions": true,
-    "rootDir": "."
+    "rootDir": ".",
+    "types": ["node"]
   },
   "exclude": ["npm/**/*"],
   "include": ["./**/*.ts", "./.npm/*.ts"]

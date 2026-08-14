@@ -62,7 +62,7 @@ void describe('getFOTABundles()', () => {
 				endpoint: new URL('https://example.com/'),
 				apiKey: 'some-key',
 			},
-			mockFetch as any,
+			mockFetch,
 		)
 
 		const res = await fetcher()
