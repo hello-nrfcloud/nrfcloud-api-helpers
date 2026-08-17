@@ -78,8 +78,7 @@
     "access": "public"
   },
   "files": [
-    "npm",
-    "src",
+    "dist",
     "LICENSE",
     "README.md"
   ],
