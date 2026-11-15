@@ -16,6 +16,7 @@
     "noUnusedLocals": true,
     "noEmit": true,
     "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
     "allowImportingTsExtensions": true,
     "rewriteRelativeImportExtensions": true,
     "rootDir": "./src",
