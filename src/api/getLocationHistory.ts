@@ -3,17 +3,19 @@ import type { FetchError } from './FetchError.ts'
 import type { ValidationError } from './validatedFetch.ts'
 import { validatedFetch } from './validatedFetch.ts'
 
-export enum LocationHistoryServiceType {
-	ANCHOR = 'ANCHOR',
-	GNSS = 'GNSS',
-	GPS = 'GPS',
-	MCELL = 'MCELL',
-	MCELL_EVAL = 'MCELL_EVAL',
-	SCELL = 'SCELL',
-	SCELL_EVAL = 'SCELL_EVAL',
-	WIFI = 'WIFI',
-	WIFI_EVAL = 'WIFI_EVAL',
-}
+export const LocationHistoryServiceType = {
+	ANCHOR: 'ANCHOR',
+	GNSS: 'GNSS',
+	GPS: 'GPS',
+	MCELL: 'MCELL',
+	MCELL_EVAL: 'MCELL_EVAL',
+	SCELL: 'SCELL',
+	SCELL_EVAL: 'SCELL_EVAL',
+	WIFI: 'WIFI',
+	WIFI_EVAL: 'WIFI_EVAL',
+} as const
+export type LocationHistoryServiceType =
+	(typeof LocationHistoryServiceType)[keyof typeof LocationHistoryServiceType]
 
 const LocationHistoryType = Type.Object(
 	{

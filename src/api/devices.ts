@@ -22,14 +22,15 @@ const ProvisionDevice = Type.Object({
 /**
  * firmware types supported by a device for FOTA
  */
-export enum FwType {
-	APP = 'APP',
-	MODEM = 'MODEM',
-	BOOT = 'BOOT',
-	SOFTDEVICE = 'SOFTDEVICE',
-	BOOTLOADER = 'BOOTLOADER',
-	MDM_FULL = 'MDM_FULL',
-}
+export const FwType = {
+	APP: 'APP',
+	MODEM: 'MODEM',
+	BOOT: 'BOOT',
+	SOFTDEVICE: 'SOFTDEVICE',
+	BOOTLOADER: 'BOOTLOADER',
+	MDM_FULL: 'MDM_FULL',
+} as const
+export type FwType = (typeof FwType)[keyof typeof FwType]
 
 export const devices = (
 	{

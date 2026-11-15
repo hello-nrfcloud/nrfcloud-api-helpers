@@ -5,19 +5,20 @@ import type { FetchError } from './FetchError.ts'
 import type { ValidationError } from './validatedFetch.ts'
 import { validatedFetch } from './validatedFetch.ts'
 
-export enum FOTAJobStatus {
-	CREATED = 'CREATED',
-	IN_PROGRESS = 'IN_PROGRESS',
-	CANCELLED = 'CANCELLED',
-	DELETION_IN_PROGRESS = 'DELETION_IN_PROGRESS',
-	COMPLETED = 'COMPLETED',
-	QUEUED = 'QUEUED',
-	FAILED = 'FAILED',
-	SUCCEEDED = 'SUCCEEDED',
-	TIMED_OUT = 'TIMED_OUT',
-	REJECTED = 'REJECTED',
-	DOWNLOADING = 'DOWNLOADING',
-}
+export const FOTAJobStatus = {
+	CREATED: 'CREATED',
+	IN_PROGRESS: 'IN_PROGRESS',
+	CANCELLED: 'CANCELLED',
+	DELETION_IN_PROGRESS: 'DELETION_IN_PROGRESS',
+	COMPLETED: 'COMPLETED',
+	QUEUED: 'QUEUED',
+	FAILED: 'FAILED',
+	SUCCEEDED: 'SUCCEEDED',
+	TIMED_OUT: 'TIMED_OUT',
+	REJECTED: 'REJECTED',
+	DOWNLOADING: 'DOWNLOADING',
+} as const
+export type FOTAJobStatus = (typeof FOTAJobStatus)[keyof typeof FOTAJobStatus]
 
 const ts = Type.String({
 	title: 'Timestamp',
